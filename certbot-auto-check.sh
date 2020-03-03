@@ -28,6 +28,12 @@ for cert in $(find "$DIR" -iname '*_chain.pem'); do
 
 done
 
+if [ $(wc -l "$TEMPFILE" | cut -d' ' -f1) -eq 0 ]; then
+	>&2 echo "$DIR contains no files matching *_chain.pem that expire in the next 90 days."
+	rm "$TEMPFILE"
+	exit 1
+fi
+
 sort -u "$TEMPFILE" | xargs -I '{}' zgrep '{}' "$SERIAL_LIST"
 RESULT=$?
 if [ $RESULT -eq 2 ]; then
