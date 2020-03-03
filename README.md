@@ -14,4 +14,6 @@ The scripts will first attempt to find matches by grepping against "\*.txt.gz", 
 
 ## acme.sh
 
-Placeholder one-liner: `find ~/.acme.sh -iname '*.conf' ! -iname '*.csr.conf' -print0 | xargs -0 grep Le_LinkCert | awk -F '/' '{print $NF}' | sed "s/'//" | sort -u | xargs -I '{}' zgrep '{}' *.txt.gz`
+If you use acme.sh, running `./acme-sh-check.sh` will scan your ~/.acme.sh/ directory for any certificate isuuance configuration files, extracting from the Le_LinkCert line the latest serial number for that certificate.
+
+The script then scans for the serial number in the list of revoked serial numbers, outputting either a list of affected serial numbers or a message (zgrep error/no affected certificates found).
