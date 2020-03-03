@@ -3,8 +3,9 @@
 TEMPFILE=$(tempfile -d /tmp)
 DIR="$1"
 
-if [ ! -d "$1" ]; then
+if [ -z "$1" -o ! -d "$1" ]; then
 	>&2 echo "Usage: $0 directory"
+	exit 1
 fi
 
 SERIAL_LIST=$(find -L . -maxdepth 1 -size +1M -iname '*.txt.gz' -o -iname '*.txt' | head -n1)
@@ -28,6 +29,7 @@ for cert in $(find "$DIR" -iname '*_chain.pem'); do
 done
 
 sort -u "$TEMPFILE" | xargs -I '{}' zgrep '{}' "$SERIAL_LIST"
+RESULT=$?
 if [ $RESULT -eq 2 ]; then
 	>&2 echo "An error occurred using zgrep."
 elif [ $RESULT -eq 1 ]; then
