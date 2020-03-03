@@ -1,4 +1,4 @@
-# connection-check
+# le-revoke-check-2020
 
 This repository contains scripts to check if any of your certificates are affected by the Let's Encrypt revocation due to the CAA bug.
 
