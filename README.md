@@ -25,3 +25,17 @@ For any affected certificates, you can modify the `Le_NextRenewTime` line in the
 If you use certbot-auto, running `./certbot-auto-check.sh DIRECTORY` will scan DIRECTORY for any files matching "\*_chain.pem", check for certificates expiring between now and 90 days time, and extract the serial numbers of those that match these conditions.
 
 The script then scans for the serial numbers in the list of revoked serial numbers, outputting either a list of affected serial numbers or a message (zgrep error/no affected certificates found).
+
+## Other/Custom
+
+For other ACME clients, or for scanning a directory containing certificates, you can modify `certbot-auto-check.sh` to change the file names being searched for.
+
+For example, `certbot-auto-check.sh` can be modified for use with acme.sh by changing
+
+`for cert in $(find "$DIR" -iname '*_chain.pem'); do`
+
+to
+
+`for cert in $(find "$DIR" -iname '*.cer'); do`
+
+and then running `./certbot-auto-check.sh ~/.acme.sh`
