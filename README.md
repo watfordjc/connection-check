@@ -17,3 +17,5 @@ The scripts will first attempt to find matches by grepping against "\*.txt.gz", 
 If you use acme.sh, running `./acme-sh-check.sh` will scan your ~/.acme.sh/ directory for any certificate issuance configuration files, extracting from the Le_LinkCert line the latest serial number for that certificate.
 
 The script then scans for the serial number in the list of revoked serial numbers, outputting either a list of affected serial numbers or a message (zgrep error/no affected certificates found).
+
+For any affected certificates, you can modify the `Le_NextRenewTime` line in the ~/.acme.sh/domain/domain.conf or ~/.acme.sh/domain_ecc/domain.conf file to a unix timestamp in the past, such as `Le_NextRenewTime='1583200000'`, and then manually run the cron command.
